@@ -1,19 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * AD/LDAP Module for Kohana
+ * Overrides some functionality when using the LDAP driver.
  *
- * @package    KadLDAP
+ * @package    Kadldap
  * @author     Beau Dacious <dacious.beau@gmail.com>
  * @copyright  (c) 2009 Beau Dacious
  * @license    http://www.opensource.org/licenses/mit-license.php
- */
-
-/**
- * Auth
  *
- * Overrides some functionality when using the LDAP driver.
  */
-class Auth extends Auth_Core {
+abstract class Kadldap_Auth extends Auth
+{
 
 	/**
 	 * Login method override for Auth module.
@@ -21,16 +17,21 @@ class Auth extends Auth_Core {
 	 * The Auth module salts all passwords before passing them around. This is
 	 * no good if we're working with LDAP.
 	 *
-	 * @see Auth_Core::login()
+	 * @param string $username
+	 * @param string $password
+	 * @param boolean $remember
+	 * @return <type>
 	 */
 	public function login($username, $password, $remember = FALSE)
 	{
 		if (empty($password))
-			return FALSE;
-
-		if ( $this->config['driver'] == 'LDAP' )
 		{
-			return $this->driver->login($username, $password, $remember);
+			return FALSE;
+		}
+
+		if (strtoupper($this->_config['driver']) == 'LDAP')
+		{
+			return $this->_login($username, $password, $remember);
 		}
 		else
 		{

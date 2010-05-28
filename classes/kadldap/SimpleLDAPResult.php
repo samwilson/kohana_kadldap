@@ -16,7 +16,7 @@
  *
  * This class hasn't been tested much and my not work at all.
  */
-class SimpleLDAPResult implements Iterator, ArrayAccess, Countable {
+class Kadldap_SimpleLDAPResult implements Iterator, ArrayAccess, Countable {
 
 	/**
 	 * Tracks the current position for iterator methods
