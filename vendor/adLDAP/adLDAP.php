@@ -749,18 +749,24 @@ class adLDAP {
     }
     
     /**
-    * Return a complete list of "groups in groups"
-    * 
-    * @param string $group The group to get the list from
-    * @return array
-    */
+     * Return a complete list of "groups in groups".
+	 *
+	 * Kadldap changes:
+	 * Line:
+	 *          if (is_array($groups[0]["memberof"])) {
+	 * changed to:
+	 *             if (isset($groups[0]["memberof"]) && is_array($groups[0]["memberof"])) {
+     *
+     * @param string $group The group to get the list from
+     * @return array
+     */
     public function recursive_groups($group){
         if ($group===NULL){ return (false); }
 
         $ret_groups=array();
         
         $groups=$this->group_info($group,array("memberof"));
-        if (is_array($groups[0]["memberof"])) {
+        if (isset($groups[0]["memberof"]) && is_array($groups[0]["memberof"])) {
             $groups=$groups[0]["memberof"];
 
             if ($groups){

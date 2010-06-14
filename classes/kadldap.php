@@ -95,7 +95,7 @@ class Kadldap
 		}
 		else
 		{
-			throw new Exception('Method ' . $name . ' does not exist.');
+			throw new Exception("Method $name does not exist in adLDAP.");
 		}
 	}
 

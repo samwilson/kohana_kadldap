@@ -17,6 +17,12 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 	/** @var Kadldap The Kadldap instance. */
 	protected $ldap;
 
+	/** @var string The user's password is stored in the session under this key. */
+	private $_password_session_suffix = '_kadldap_password';
+
+	/** @var array[string] The groups to which the current user belongs. */
+	private $_groups;
+
 	public function __construct($config = array())
 	{
 		//exit(__FILE__);
@@ -37,7 +43,8 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 		$authenticated = $this->ldap->authenticate($username, $password, TRUE);
 		if ($authenticated)
 		{
-			return $this->complete_login($this->ldap->user_info($username));
+			$this->_session->set($this->_config['session_key'].$this->_password_session_suffix, $password);
+			return $this->complete_login($username);
 		}
 		return FALSE;
 	}
@@ -50,7 +57,7 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 	 */
 	public function check_password($password)
 	{
-		exit(__FILE__.' line '.__LINE__);
+		//exit(__FILE__.' line '.__LINE__);
 		//return $this->_login($this->get_user(), $password);
 		/*$username = $this->get_user();
 
@@ -62,45 +69,43 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 		return ($password === $this->password($username));
 		*/
 	}
-	/**/
-
-	public function force_login($username)
-	{
-		if ( $this->user_exists($username) )
-		{
-			return $this->complete_login($this->ldap->user_info($username));
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-	/**/
 
 	public function password($username)
 	{
-		exit(__FILE__.' line '.__LINE__);
-		//exit(kohana::debug($this->ldap->user_info($username)));
-		//return FALSE;
+		return $this->_session->get($this->_config['session_key'].$this->_password_session_suffix);
 	}
-	/**/
 
 	/**
 	 * Check if there is an active session. Optionally allows checking for a
-	 * specific role.
+	 * specific role (or 'group', in LDAP parlance).
 	 *
 	 * @param   string   role name
 	 * @return  mixed
 	 */
 	public function logged_in($role = NULL)
 	{
-		//exit(kohana::debug($this->get_user()));
-		if ($role == NULL)
+		$logged_in = parent::logged_in();
+
+		// If no role requested, or not logged in, don't check for role/group
+		// membership.
+		if ($role == NULL || !$logged_in)
 		{
-			return parent::logged_in();
+			return $logged_in;
 		} else
 		{
-			return $this->ldap->user_ingroup($this->get_user(), $role);
+			// If a role is being checked, first find this user's groups,
+			// and then see if the requested role is in them.
+			$username = $this->get_user();
+			if (!is_array($this->_groups))
+			{
+				$this->ldap->authenticate($username, $this->password($username));
+				$this->_groups = $this->ldap->user_groups($username);
+				if (!is_array($this->_groups))
+				{
+					$this->_groups = array();
+				}
+			}
+			return in_array($role, $this->_groups);
 		}
 	}
 
