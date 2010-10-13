@@ -11,15 +11,14 @@
 /**
  * LDAP User Model
  */
-class LDAP_User_Model extends LDAP_Model {
-
-/* ----------------------------------------------------------------------------
-  Static Methods and Properties
----------------------------------------------------------------------------- */
+class Model_LDAPUser extends Model_LDAP
+{
+	
+	protected $userinfo = array();
 
 	public static function factory($username = NULL)
 	{
-		$user = new LDAP_User_Model;
+		$user = new Model_LDAPUser;
 
 		if ( NULL !== $username )
 		{
@@ -28,12 +27,6 @@ class LDAP_User_Model extends LDAP_Model {
 
 		return $user;
 	}
-
-/* ----------------------------------------------------------------------------
-  Non-Static Methods and Properties
----------------------------------------------------------------------------- */
-
-	protected $userinfo = array();
 
 	public function __get($name)
 	{
@@ -85,7 +78,7 @@ class LDAP_User_Model extends LDAP_Model {
 	public function is_member_of($group)
 	{
 		// group model
-		if ( $group instanceof LDAP_Group_Model )
+		if ( $group instanceof Model_LDAPGroup )
 		{
 			return in_array($group->dn, $this->userinfo['memberof']);
 		}

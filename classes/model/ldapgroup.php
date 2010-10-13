@@ -11,15 +11,14 @@
 /**
  * LDAP Group Model
  */
-class LDAP_Group_Model extends LDAP_Model {
+class Model_LDAPGroup extends Model_LDAP
+{
 
-/* ----------------------------------------------------------------------------
-  Static Methods and Properties
----------------------------------------------------------------------------- */
+	protected $groupinfo = array();
 
 	public static function factory($groupname = NULL)
 	{
-		$group = new LDAP_Group_Model;
+		$group = new Model_LDAPGroup;
 
 		if ( NULL !== $groupname )
 		{
@@ -28,12 +27,6 @@ class LDAP_Group_Model extends LDAP_Model {
 
 		return $group;
 	}
-
-/* ----------------------------------------------------------------------------
-  Non-Static Methods and Properties
----------------------------------------------------------------------------- */
-
-	protected $groupinfo = array();
 
 	public function __get($name)
 	{
@@ -106,7 +99,7 @@ class LDAP_Group_Model extends LDAP_Model {
 		}
 
 		// samaccountname
-		$ldap_user = new LDAP_User_Model;
+		$ldap_user = new Model_LDAPUser;
 		$ldap_user->get($user);
 
 		if ( $this->has_member($ldap_user) )
@@ -120,7 +113,7 @@ class LDAP_Group_Model extends LDAP_Model {
 	public function is_member_of($group)
 	{
 		// group model
-		if ( $group instanceof LDAP_Group_Model )
+		if ( $group instanceof Model_LDAPGroup )
 		{
 			return in_array($group->dn, $this->groupinfo['memberof']);
 		}

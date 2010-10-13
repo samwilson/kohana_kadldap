@@ -13,7 +13,7 @@
  *
  * This is to be extended by actual models.
  */
-class LDAP_Model {
+class Model_LDAP {
 
 	protected $ldap;
 
