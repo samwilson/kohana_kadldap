@@ -22,7 +22,7 @@ class Kadldap
 	public static function instance($config = array())
 	{
 		static $instance;
-
+		
 		// Load the KadLDAP instance
 		empty($instance) AND $instance = new Kadldap($config);
 
@@ -39,8 +39,8 @@ class Kadldap
 		/*
 		 * Get config.
 		*/
-		$config = Kohana::config('kadldap')->kadldap;
-
+		$config = Kohana::$config->load('kadldap')->kadldap;
+		
 		/*
 		 * Include third-party adLDAP library from vendor directory.
 		*/
@@ -68,7 +68,7 @@ class Kadldap
 	 */
 	public function authenticate($username, $password, $prevent_rebind = FALSE)
 	{
-		//exit(kohana::debug($this->_adldap));
+// 		exit(kohana::debug($this->_adldap));
 		try
 		{
 			return $this->_adldap->authenticate($username, $password, $prevent_rebind);

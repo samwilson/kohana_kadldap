@@ -7,7 +7,7 @@
 <?php endif ?>
 
 
-<?php if (!auth::instance()->logged_in()): ?>
+<?php if (!Auth::instance()->logged_in()): ?>
 
 <script type="text/javascript">
 	$().ready(function() {
@@ -29,7 +29,7 @@
 
 <p>
 		You are now logged in as
-		<?php echo auth::instance()->get_user().$kadldap->get_account_suffix() ?>
+		<?php echo Auth::instance()->get_user().$kadldap->get_account_suffix() ?>
 		<?php echo html::anchor('kadldap/logout', '[Log out]') ?>
 </p>
 <!--p>Some information about your account:</p-->
@@ -50,15 +50,15 @@
 
 <dl>
 	<dt>Kadldap::all_contacts()</dt>
-	<dd><?php echo kohana::debug($kadldap->all_contacts()) ?></dd>
+	<dd><?php //echo Kohana_Debug::vars($kadldap->all_contacts()) ?></dd>
 	<dt>all_distribution_groups</dt>
-	<dd><?php echo kohana::debug($kadldap->all_distribution_groups()) ?></dd>
+	<dd><?php echo Kohana_Debug::vars($kadldap->all_distribution_groups()) ?></dd>
 	<dt>get_account_suffix</dt>
-	<dd><?php echo kohana::debug($kadldap->get_account_suffix()) ?></dd>
+	<dd><?php echo Kohana_Debug::vars($kadldap->get_account_suffix()) ?></dd>
 	<dt>Kadldap::user_info($username)</dt>
-	<dd><?php echo kohana::debug($kadldap->user_info(auth::instance()->get_user())) ?></dd>
+	<dd><?php echo Kohana_Debug::vars($kadldap->user_info(auth::instance()->get_user())) ?></dd>
 	<dt>Kadldap::user_groups($username)</dt>
-	<dd><?php echo kohana::debug($kadldap->user_groups(auth::instance()->get_user())) ?></dd>
+	<dd><?php echo Kohana_Debug::vars($kadldap->user_groups(auth::instance()->get_user())) ?></dd>
 </dl>
 
 <?php endif ?>

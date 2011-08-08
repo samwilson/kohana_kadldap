@@ -18,10 +18,8 @@ class Controller_Kadldap extends Controller_Userguide
 		$view->message = FALSE;
 		if (isset($_POST['login']))
 		{
-			$post = Validate::factory($_POST)
-				->filter(TRUE,'trim')
+			$post = Validation::factory($_POST)
 				->rule('username', 'not_empty')
-				->rule('username', 'min_length', array(1))
 				->rule('password', 'not_empty');
 			if($post->check())
 			{
