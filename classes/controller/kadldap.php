@@ -1,5 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-
+/**
+ * Module controller for Kadldap, to test configuration and connection details.  This
+ * uses the Userguide controller and views, and is linked to from the userguide.
+ *
+ * @package    Kadldap
+ * @author     Sam Wilson <sam@samwilson.id.au>
+ * @copyright  (c) 2011 Sam Wilson
+ * @author     Github user 'sfroeth'
+ * @copyright  (c) 2011 sfroeth
+ * @license    http://www.opensource.org/licenses/mit-license.php
+ */
 class Controller_Kadldap extends Controller_Userguide
 {
 
@@ -8,12 +18,13 @@ class Controller_Kadldap extends Controller_Userguide
 		$view = View::factory('kadldap/index');
 		$this->template->content = $view;
 		$this->template->title = 'Kadldap';
-		$this->template->menu = NULL;
+		$this->template->menu = '';
 		$this->template->breadcrumb = array(
 			Route::get('docs/guide')->uri() => __('User Guide'),
-			Route::get('docs/guide')->uri().'/kadldap.about' => $this->template->title,
+			Route::get('docs/guide')->uri().'/kadldap' => $this->template->title,
 			'Configuration Test'
 		);
+		$view->kadldap = Kadldap::instance();
 
 		$view->message = FALSE;
 		if (isset($_POST['login']))
@@ -48,10 +59,12 @@ class Controller_Kadldap extends Controller_Userguide
 		{
 			$username = Auth::instance()->get_user();
 			$password = Auth::instance()->password($username);
-			$view->kadldap = Kadldap::instance();
 			$view->kadldap->authenticate($username, $password);
+			$userinfo = $view->kadldap->user()->info($username, array('*'));
+			$view->userinfo = Arr::get($userinfo, 0, array());
+		} else {
+			$view->userinfo = null;
 		}
-		
 	}
 
 	public function action_logout()

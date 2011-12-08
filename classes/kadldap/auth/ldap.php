@@ -1,21 +1,17 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * AD/LDAP Module for Kohana
+ * LDAP Driver for Kohana's Auth module.
  *
- * @package    KadLDAP
+ * @package    Kadldap
  * @author     Beau Dacious <dacious.beau@gmail.com>
  * @copyright  (c) 2009 Beau Dacious
  * @license    http://www.opensource.org/licenses/mit-license.php
  */
-
-/**
- * LDAP Driver for Kohana's Auth module.
- */
-class Kadldap_Auth_Ldap extends Kadldap_Auth
+class Kadldap_Auth_Ldap extends Auth
 {
 
 	/** @var Kadldap The Kadldap instance. */
-	protected $ldap;
+	protected $kadldap;
 
 	/** @var string The user's password is stored in the session under this key. */
 	private $_password_session_suffix = '_kadldap_password';
@@ -26,7 +22,7 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 	public function __construct($config = array())
 	{
 		//exit(__FILE__);
-		$this->ldap = Kadldap::instance();
+		$this->kadldap = Kadldap::instance();
 		parent::__construct($config);
 	}
 
@@ -40,7 +36,7 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 	 */
 	public function _login($username, $password, $remember)
 	{
-		$authenticated = $this->ldap->authenticate($username, $password, TRUE);
+		$authenticated = $this->kadldap->authenticate($username, $password, TRUE);
 		if ($authenticated)
 		{
 			$this->_session->set($this->_config['session_key'].$this->_password_session_suffix, $password);
@@ -50,24 +46,12 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 	}
 
 	/**
-	 * Compare password with original (plain text). Works for current (logged in) user.
-	 *
-	 * @param   string  $password
-	 * @return  boolean
+	 * Not used, but must be overridden.
+	 * 
+	 * @return void
 	 */
 	public function check_password($password)
 	{
-		//exit(__FILE__.' line '.__LINE__);
-		//return $this->_login($this->get_user(), $password);
-		/*$username = $this->get_user();
-
-		if ($username === FALSE)
-		{
-			return FALSE;
-		}
-
-		return ($password === $this->password($username));
-		*/
 	}
 
 	public function password($username)
@@ -108,27 +92,5 @@ class Kadldap_Auth_Ldap extends Kadldap_Auth
 			return in_array($role, $this->_groups);
 		}
 	}
-
-	/**
-	 *
-	 * @return <type>
-	 */
-	/*public function auto_login()
-	{
-		$username = $this->session->get($this->config['session_key']);
-
-		if ( $this->user_exists($username) )
-		{
-			return $this->complete_login($username);
-		}
-	}
-	/**/
-
-	/*protected function user_exists($username)
-	{
-		$userinfo = $this->ldap->user_info($username);
-		return ( is_array($userinfo) && array_key_exists('count', $userinfo) && $userinfo['count'] == 1);
-	}
-	/**/
 
 }

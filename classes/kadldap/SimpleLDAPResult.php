@@ -1,20 +1,16 @@
 <?php
 /**
- * AD/LDAP Module for Kohana
- *
- * @package    KadLDAP
- * @author     Beau Dacious <dacious.beau@gmail.com>
- * @copyright  (c) 2009 Beau Dacious
- * @license    http://www.opensource.org/licenses/mit-license.php
- */
-
-/**
  * Simple LDAP Result Adapter
  *
  * This class is designed to simplify interacting with results returned by
  * LDAP-related functions.
  *
  * This class hasn't been tested much and my not work at all.
+ *
+ * @package    Kadldap
+ * @author     Beau Dacious <dacious.beau@gmail.com>
+ * @copyright  (c) 2009 Beau Dacious
+ * @license    http://www.opensource.org/licenses/mit-license.php
  */
 class Kadldap_SimpleLDAPResult implements Iterator, ArrayAccess, Countable {
 

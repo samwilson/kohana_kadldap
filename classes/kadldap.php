@@ -1,12 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * AD/LDAP Module for Kohana 3.
+ * AD/LDAP Module for Kohana.
  *
- * @package    KadLDAP
- * @category   Base
+ * @package    Kadldap
  * @author     Beau Dacious <dacious.beau@gmail.com>
  * @copyright  (c) 2009 Beau Dacious
- * @author     Sam Wilson
+ * @author     Sam Wilson <sam@samwilson.id.au>
+ * @copyright  (c) 2011 Sam Wilson
+ * @author     Github user 'sfroeth'
+ * @copyright  (c) 2011 sfroeth
  * @license    http://www.opensource.org/licenses/mit-license.php
  */
 class Kadldap
@@ -19,12 +21,12 @@ class Kadldap
 	 *
 	 * @return Kadldap
 	 */
-	public static function instance($config = array())
+	public static function instance()
 	{
 		static $instance;
-		
-		// Load the KadLDAP instance
-		empty($instance) AND $instance = new Kadldap($config);
+
+		// Load the Kadldap instance
+		empty($instance) AND $instance = new Kadldap();
 
 		return $instance;
 	}
@@ -37,14 +39,19 @@ class Kadldap
 	public function __construct()
 	{
 		/*
-		 * Get config.
+		 * Get and check config.
 		*/
 		$config = Kohana::$config->load('kadldap')->kadldap;
-		
+		if (count($config['domain_controllers'])==0)
+		{
+			$message = "No domain controllers provided in Kadldap configuration.";
+			throw new Kohana_Exception($message);
+		}
+
 		/*
 		 * Include third-party adLDAP library from vendor directory.
 		*/
-		$adldap_file = Kohana::find_file('vendor/adLDAP', 'adLDAP');
+		$adldap_file = Kohana::find_file('vendor/adLDAP/src', 'adLDAP');
 		if (!$adldap_file)
 		{
 			throw new Kohana_Exception('Unable to find adLDAP library.');
@@ -68,13 +75,11 @@ class Kadldap
 	 */
 	public function authenticate($username, $password, $prevent_rebind = FALSE)
 	{
-// 		exit(kohana::debug($this->_adldap));
 		try
 		{
 			return $this->_adldap->authenticate($username, $password, $prevent_rebind);
 		} catch (Exception $e)
 		{
-			//exit(kohana::debug($e->getMessage(), $this->_adldap->get_root_dse()));
 			throw new adLDAPException($this->_adldap->get_last_error());
 		}
 	}

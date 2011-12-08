@@ -1,15 +1,11 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * AD/LDAP Module for Kohana
+ * LDAP Group Model
  *
- * @package    KadLDAP
+ * @package    Kadldap
  * @author     Beau Dacious <dacious.beau@gmail.com>
  * @copyright  (c) 2009 Beau Dacious
  * @license    http://www.opensource.org/licenses/mit-license.php
- */
-
-/**
- * LDAP Group Model
  */
 class Model_LDAPGroup extends Model_LDAP
 {
