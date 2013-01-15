@@ -32,7 +32,7 @@ class Controller_Kadldap extends Controller_Userguide
 			$post = Validation::factory($_POST)
 				->rule('username', 'not_empty')
 				->rule('password', 'not_empty');
-			if($post->check())
+			if ($post->check())
 			{
 				$username = $post['username'];
 				$password = arr::get($post, 'password', '');
@@ -63,14 +63,14 @@ class Controller_Kadldap extends Controller_Userguide
 			$userinfo = $view->kadldap->user()->info($username, array('*'));
 			$view->userinfo = Arr::get($userinfo, 0, array());
 		} else {
-			$view->userinfo = null;
+			$view->userinfo = NULL;
 		}
 	}
 
 	public function action_logout()
 	{
-		auth::instance()->logout();
-		$this->request->redirect('kadldap');
+		Auth::instance()->logout();
+		$this->redirect('kadldap');
 	}
 
 }

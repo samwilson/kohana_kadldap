@@ -1,4 +1,7 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php
+
+defined('SYSPATH') OR die('No direct access allowed.');
+
 /**
  * LDAP Driver for Kohana's Auth module.
  *
@@ -7,8 +10,7 @@
  * @copyright  (c) 2009 Beau Dacious
  * @license    http://www.opensource.org/licenses/mit-license.php
  */
-class Kadldap_Auth_LDAP extends Auth
-{
+class Kadldap_Auth_LDAP extends Auth {
 
 	/** @var Kadldap The Kadldap instance. */
 	protected $kadldap;
@@ -21,7 +23,6 @@ class Kadldap_Auth_LDAP extends Auth
 
 	public function __construct($config = array())
 	{
-		//exit(__FILE__);
 		$this->kadldap = Kadldap::instance();
 		parent::__construct($config);
 	}
@@ -52,6 +53,7 @@ class Kadldap_Auth_LDAP extends Auth
 	 */
 	public function check_password($password)
 	{
+		
 	}
 
 	public function password($username)
@@ -63,8 +65,8 @@ class Kadldap_Auth_LDAP extends Auth
 	 * Check if there is an active session. Optionally allows checking for a
 	 * specific role (or 'group', in LDAP parlance).
 	 *
-	 * @param   string   role name
-	 * @return  mixed
+	 * @param string $role Role name
+	 * @return mixed
 	 */
 	public function logged_in($role = NULL)
 	{
@@ -72,25 +74,33 @@ class Kadldap_Auth_LDAP extends Auth
 
 		// If no role requested, or not logged in, don't check for role/group
 		// membership.
-		if ($role == NULL || !$logged_in)
+		if ($role == NULL OR ! $logged_in)
 		{
 			return $logged_in;
 		} else
 		{
 			// If a role is being checked, first find this user's groups,
 			// and then see if the requested role is in them.
-			$username = $this->get_user();
-			if (!is_array($this->_groups))
+			if ( ! is_array($this->_groups))
 			{
-				$this->ldap->authenticate($username, $this->password($username));
-				$this->_groups = $this->ldap->user_groups($username);
-				if (!is_array($this->_groups))
-				{
-					$this->_groups = array();
-				}
+				$this->_groups = $this->get_roles();
 			}
 			return in_array($role, $this->_groups);
 		}
+	}
+
+	/**
+	 * Get list of all roles that the current user holds (i.e. LDAP groups
+	 * of which they are a member.
+	 * 
+	 * @uses adLDAPUsers::groups()
+	 * @return array An array of strings
+	 */
+	public function get_roles()
+	{
+		$username = $this->get_user();
+		$this->kadldap->authenticate($username, $this->password($username));
+		return $this->kadldap->user()->groups($username);
 	}
 
 }
