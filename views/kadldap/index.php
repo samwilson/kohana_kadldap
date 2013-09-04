@@ -11,23 +11,32 @@
 		$('input[name="username"]').focus();
 	});
 </script>
-<?php echo form::open() ?>
+
+<?php echo Form::open() ?>
 <p>
-	<?php echo form::label('username', 'Username:')?>
-	<?php echo form::input('username', '', array('id'=>'focus-me')) ?>
+	<?php echo Form::label('username', 'Username:')?>
+	<?php echo Form::input('username', '', array('id'=>'focus-me')) ?>
 	<code><?php echo $kadldap->getAccountSuffix() ?></code>
 </p>
-<p><?php echo form::label('password', 'Password:')?>
-		<?php echo form::password('password') ?></p>
-<p><?php echo form::submit('login', 'Login') ?></p>
-	<?php echo form::close() ?>
+<p>
+	<?php echo Form::label('password', 'Password:')?>
+	<?php echo Form::password('password') ?>
+</p>
+<p>
+	<?php echo Form::submit('login', 'Login') ?>
+</p>
+<?php echo Form::close() ?>
 
 <?php else: // if (!Auth::instance()->logged_in()): ?>
 
 <p>
-		You are logged in as
-		<code><?php echo Auth::instance()->get_user() ?></code>
-		<?php echo html::anchor('kadldap/logout', '[Log out]') ?>
+	You are logged in as
+	<strong><?php echo Auth::instance()->get_user() ?></strong>
+	and have the following roles:
+	<strong><?php echo join('</strong>, <strong>', Auth::instance()->get_roles()) ?></strong>.
+</p>
+<p>
+	<?php echo html::anchor('kadldap/logout', '[Log out]') ?>
 </p>
 
 <h2>User Values</h2>
@@ -36,7 +45,7 @@
 		if (!is_array($info)) continue;
 	?>
 	<tr>
-		<th><code><?php echo $label ?></code></th>
+		<th rowspan="<?php echo $info['count'] ?>"><?php echo $label ?></th>
 		<td><?php 
 			if ($info['count']==1)
 			{
@@ -44,7 +53,7 @@
 			} else
 			{
 				unset($info['count']);
-				echo join ('<br />', $info);
+				echo join ('</td></tr><tr><td>', $info);
 			}
 			?>
 		</td>

@@ -1,6 +1,7 @@
 # About Kadldap
 
-This module provides an Auth driver for Active Directory & LDAP authentication.
+This module provides an Auth driver for Active Directory & LDAP authentication,
+based on the [adLDAP](http://adldap.sourceforge.net) library.
 To use it, simply copy the config file from `MODPATH/config/kadldap.php` to
 `APPPATH/config/kadldap.php` and edit the variables therein.
 

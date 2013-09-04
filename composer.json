@@ -1,0 +1,10 @@
+{
+	"name": "samwilson/kohana_kadldap",
+	"type": "kohana-module",
+	"description": "Kohana wrapper module for adLDAP.",
+	"version": "1.0.0",
+	"license": "MIT",
+	"require": {
+		"adldap/adldap": "v4.0-stable"
+	}
+}

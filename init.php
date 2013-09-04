@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 
 // Kadldap testing and demonstration page.
 Route::set('kadldap', 'kadldap(/<action>)')
 	->defaults(array(
-		'controller' => 'kadldap',
+		'controller' => 'Kadldap',
 		'action'     => 'index',
 	));
