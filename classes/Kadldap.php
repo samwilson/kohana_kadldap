@@ -52,9 +52,9 @@ class Kadldap
 		 * Include third-party adLDAP library from vendor directory, if it's not
 		 * already autoloaded (via Composer).
 		 */
-		if ( ! class_exists('adLDAP\\adLDAP'))
+		if ( ! class_exists('adLDAP'))
 		{
-			$adldap_file = Kohana::find_file('vendor/adLDAP/lib', 'adLDAP');
+			$adldap_file = Kohana::find_file('vendor/adLDAP/src', 'adLDAP');
 			if (!$adldap_file)
 			{
 				throw new Kohana_Exception('Unable to find adLDAP library.');
@@ -65,7 +65,7 @@ class Kadldap
 		/*
 		 * Store instantiation of adLDAP library.
 		*/
-		$this->_adldap = new adLDAP\adLDAP($config);
+		$this->_adldap = new adLDAP($config);
 	}
 
 	/**
