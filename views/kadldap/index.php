@@ -33,7 +33,11 @@
 	You are logged in as
 	<strong><?php echo Auth::instance()->get_user() ?></strong>
 	and have the following roles:
+	<?php if (count(Auth::instance()->get_roles()) > 0): ?>
 	<strong><?php echo join('</strong>, <strong>', Auth::instance()->get_roles()) ?></strong>.
+	<?php else: ?>
+	<em>No roles found</em>.
+	<?php endif ?>
 </p>
 <p>
 	<?php echo html::anchor('kadldap/logout', '[Log out]') ?>

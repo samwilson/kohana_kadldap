@@ -100,7 +100,8 @@ class Kadldap_Auth_LDAP extends Auth {
 	{
 		$username = $this->get_user();
 		$this->kadldap->authenticate($username, $this->password($username));
-		return $this->kadldap->user()->groups($username);
+		$groups = $this->kadldap->user()->groups($username);
+		return $groups ? $groups : array();
 	}
 
 }
