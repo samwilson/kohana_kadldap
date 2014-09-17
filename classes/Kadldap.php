@@ -52,7 +52,7 @@ class Kadldap
 		 * Include third-party adLDAP library from vendor directory, if it's not
 		 * already autoloaded (via Composer).
 		 */
-		if ( ! class_exists('adLDAP'))
+		if ( ! class_exists('\adLDAP\adLDAP'))
 		{
 			$adldap_file = Kohana::find_file('vendor/adLDAP/src', 'adLDAP');
 			if (!$adldap_file)
@@ -65,7 +65,7 @@ class Kadldap
 		/*
 		 * Store instantiation of adLDAP library.
 		*/
-		$this->_adldap = new adLDAP($config);
+		$this->_adldap = new \adLDAP\adLDAP($config);
 	}
 
 	/**
@@ -84,7 +84,7 @@ class Kadldap
 			return $this->_adldap->authenticate($username, $password, $prevent_rebind);
 		} catch (Exception $e)
 		{
-			throw new adLDAPException($this->_adldap->get_last_error());
+			throw new \adLDAP\adLDAPException($this->_adldap->get_last_error());
 		}
 	}
 

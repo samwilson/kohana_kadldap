@@ -15,6 +15,7 @@ class Controller_Kadldap extends Controller_Userguide
 
 	public function action_index()
 	{
+		// Set up template and view
 		$view = View::factory('kadldap/index');
 		$this->template->content = $view;
 		$this->template->title = 'Kadldap';
@@ -25,8 +26,16 @@ class Controller_Kadldap extends Controller_Userguide
 			'Configuration Test'
 		);
 		$view->kadldap = Kadldap::instance();
-
 		$view->message = FALSE;
+
+		// Check auth driver
+		$auth_driver = Kohana::$config->load('auth')->get('driver');
+		if ($auth_driver != 'LDAP')
+		{
+			$view->message = "Incorrect configuration! Auth driver is set to '$auth_driver', but should be 'LDAP'.";
+		}
+
+		// Process login
 		if (isset($_POST['login']))
 		{
 			$post = Validation::factory($_POST)
@@ -45,7 +54,7 @@ class Controller_Kadldap extends Controller_Userguide
 					{
 						$view->message = 'Login failed.';
 					}
-				} catch (adLDAPException $e)
+				} catch (\adLDAP\adLDAPException $e)
 				{
 					$view->message = $e->getMessage();
 				}
@@ -55,6 +64,7 @@ class Controller_Kadldap extends Controller_Userguide
 			}
 		}
 
+		// Get information about the logged-in user
 		if (Auth::instance()->logged_in())
 		{
 			$username = Auth::instance()->get_user();
