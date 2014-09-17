@@ -70,7 +70,7 @@ class Kadldap_Auth_LDAP extends Auth {
 	 */
 	public function logged_in($role = NULL)
 	{
-		$logged_in = parent::logged_in();
+		$logged_in = parent::logged_in($role);
 
 		// If no role requested, or not logged in, don't check for role/group
 		// membership.
