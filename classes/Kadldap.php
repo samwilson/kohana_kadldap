@@ -13,7 +13,7 @@
  */
 class Kadldap
 {
-	/** @var adLDAP Instance of third-party adLDAP library. */
+	/** @var \Adldap\Adldap Instance of third-party Adldap library. */
 	protected $_adldap;
 
 	/**
@@ -52,20 +52,20 @@ class Kadldap
 		 * Include third-party adLDAP library from vendor directory, if it's not
 		 * already autoloaded (via Composer).
 		 */
-		if ( ! class_exists('\adLDAP\adLDAP'))
+		if ( ! class_exists('\Adldap\Adldap'))
 		{
-			$adldap_file = Kohana::find_file('vendor/adLDAP/src', 'adLDAP');
+			$adldap_file = Kohana::find_file('vendor/Adldap/src', 'Adldap');
 			if (!$adldap_file)
 			{
-				throw new Kohana_Exception('Unable to find adLDAP library.');
+				throw new Kohana_Exception('Unable to find Adldap library.');
 			}
 			require_once $adldap_file;
 		}
 
 		/*
-		 * Store instantiation of adLDAP library.
+		 * Store instantiation of Adldap library.
 		*/
-		$this->_adldap = new \adLDAP\adLDAP($config);
+		$this->_adldap = new \Adldap\Adldap($config);
 	}
 
 	/**
@@ -77,16 +77,16 @@ class Kadldap
 	 * @param bool optional $prevent_rebind
 	 * @return bool
 	 */
-	public function authenticate($username, $password, $prevent_rebind = FALSE)
-	{
-		try
-		{
-			return $this->_adldap->authenticate($username, $password, $prevent_rebind);
-		} catch (Exception $e)
-		{
-			throw new \adLDAP\adLDAPException($this->_adldap->get_last_error());
-		}
-	}
+//	public function authenticate($username, $password, $prevent_rebind = FALSE)
+//	{
+//		try
+//		{
+//			return $this->_adldap->authenticate($username, $password, $prevent_rebind);
+//		} catch (Exception $e)
+//		{
+//			throw new \Adldap\Exceptions\($this->_adldap->get_last_error());
+//		}
+//	}
 
 	/**
 	 * Wrapper for all functions in the adLDAP class that have not already been
@@ -104,7 +104,7 @@ class Kadldap
 		}
 		else
 		{
-			throw new Exception("Method $name does not exist in adLDAP.");
+			throw new Exception("Method $name does not exist in \Adldap\Adldap.");
 		}
 	}
 

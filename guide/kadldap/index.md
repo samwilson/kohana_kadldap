@@ -1,7 +1,7 @@
 # About Kadldap
 
 This module provides an Auth driver for Active Directory & LDAP authentication,
-based on the [adLDAP](http://adldap.sourceforge.net) library.
+based on the [Adldap2](http://adldap2.github.io) library.
 To use it, simply copy the config file from `MODPATH/config/kadldap.php` to
 `APPPATH/config/kadldap.php` and edit the variables therein.
 
@@ -11,4 +11,4 @@ is correct, and also enables you to see what information is available from the
 classes in this module.
 
 Please report any bugs or feature requests through
-[Github](http://github.com/samwilson/kohana_kadldap).
+[Github](https://github.com/Adldap2/Adldap2-Kohana).

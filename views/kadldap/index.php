@@ -16,7 +16,7 @@
 <p>
 	<?php echo Form::label('username', 'Username:')?>
 	<?php echo Form::input('username', '', array('id'=>'focus-me')) ?>
-	<code><?php echo $kadldap->getAccountSuffix() ?></code>
+	<code><?php echo $kadldap->getConfiguration()->getAccountSuffix() ?></code>
 </p>
 <p>
 	<?php echo Form::label('password', 'Password:')?>

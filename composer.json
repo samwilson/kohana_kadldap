@@ -25,6 +25,6 @@
 	],
 	"require": {
 		"kohana/auth": "*",
-		"adldap/adldap": "dev-master"
+		"adldap2/adldap2": "5.0.*"
 	}
 }

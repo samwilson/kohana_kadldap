@@ -54,7 +54,7 @@ class Controller_Kadldap extends Controller_Userguide
 					{
 						$view->message = 'Login failed.';
 					}
-				} catch (\adLDAP\adLDAPException $e)
+				} catch (\Adldap\Exceptions\AdldapException $e)
 				{
 					$view->message = $e->getMessage();
 				}
@@ -70,10 +70,9 @@ class Controller_Kadldap extends Controller_Userguide
 			$username = Auth::instance()->get_user();
 			$password = Auth::instance()->password($username);
 			$view->kadldap->authenticate($username, $password);
-			$userinfo = $view->kadldap->user()->info($username, array('*'));
-			$view->userinfo = Arr::get($userinfo, 0, array());
+			$view->user = $view->kadldap->users()->find($username);
 		} else {
-			$view->userinfo = NULL;
+			$view->user = NULL;
 		}
 	}
 
