@@ -12,7 +12,7 @@ return array(
 		'domain_controllers' => array(), // array('dc.example.com','dc1.example.com')
 		'account_suffix'     => '', // '@example.com'
 		'base_dn'            => '', // 'dc=example,dc=com',
-		'ad_username'        => NULL,
-		'ad_password'        => NULL
+		'admin_username'     => NULL,
+		'admin_password'     => NULL
 	)
 );

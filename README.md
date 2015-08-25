@@ -1,16 +1,16 @@
 Active Directory and LDAP authentication for Kohana
 ===================================================
 
-A wrapper module for [Kohana 3.3](http://kohanaframework.org)
-to provide Active Directory and LDAP authentication
-with the [Adldap2](http://adldap2.github.io) library.
+A [Kohana 3.3](http://kohanaframework.org) module
+that wraps [Adldap2](https://github.com/Adldap2/Adldap2)
+to provide Active Directory and LDAP authentication.
 
 ## 1. Install
 Copy the module to the `kadldap` directory in your `MODPATH`, or install with
 [Composer](https://getcomposer.org) by adding the following to your
 `composer.json` file (to get the latest stable version):
 
-    "samwilson/kohana_kadldap": "*"
+    "adldap2/adldap2-kohana": "3.*"
 
 Then enable the module with `Kohana::modules()` (usually in `bootstrap.php`).
 
@@ -31,3 +31,7 @@ Use [Auth](http://kohanaframework.org/3.3/guide/auth) as usual. e.g.:
 or:
 
     Auth::instance()->logged_in('Security Group Name');
+
+## 4. Contribute
+
+Please report all issues at https://github.com/Adldap2/Adldap2-Kohana/issues

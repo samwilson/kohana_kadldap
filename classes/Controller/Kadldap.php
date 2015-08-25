@@ -70,9 +70,11 @@ class Controller_Kadldap extends Controller_Userguide
 			$username = Auth::instance()->get_user();
 			$password = Auth::instance()->password($username);
 			$view->kadldap->authenticate($username, $password);
-			$view->user = $view->kadldap->users()->find($username);
+			$view->userinfo = $view->kadldap->users()
+				->find($username)
+				->getAttributes();
 		} else {
-			$view->user = NULL;
+			$view->userinfo = NULL;
 		}
 	}
 

@@ -91,20 +91,21 @@ class Kadldap_Auth_LDAP extends Auth {
 
 	/**
 	 * Get list of all roles that the current user holds (i.e. LDAP groups
-	 * of which they are a member.
-	 * 
-	 * @uses adLDAPUsers::groups()
-	 * @return array An array of strings
+	 * of which they are a member).
+	 *
+	 * @uses Adldap\Models\User::getGroups()
+	 * @return string[]
 	 */
 	public function get_roles()
 	{
 		$username = $this->get_user();
 		$this->kadldap->authenticate($username, $this->password($username));
-		return [];
-		var_dump($username, $this->kadldap->users());exit();
 		$user = $this->kadldap->users()->find($username);
-		$groups = $user->getGroups();
-		return $groups ? $groups : array();
+		$groups = array();
+		foreach ($user->getGroups() as $group) {
+			$groups[$group->getCommonName()] = $group->getCommonName();
+		}
+		return $groups;
 	}
 
 }

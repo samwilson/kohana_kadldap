@@ -1,13 +1,13 @@
 {
-	"name": "samwilson/kohana_kadldap",
+	"name": "adldap2/adldap2-kohana",
 	"type": "kohana-module",
 	"description": "Module for AD/LDAP support in Kohana 3 (includes an Auth driver).",
 	"license": "MIT",
 	"support": {
-		"issues": "https://github.com/samwilson/kohana_kadldap/issues",
+		"issues": "https://github.com/Adldap2/Adldap2-Kohana/issues",
 		"forum": "http://forum.kohanaframework.org",
 		"irc": "irc://irc.freenode.net/kohana",
-		"source": "https://github.com/samwilson/kohana_kadldap"
+		"source": "https://github.com/Adldap2/Adldap2-Kohana"
 	},
 	"authors": [
 		{
@@ -25,6 +25,6 @@
 	],
 	"require": {
 		"kohana/auth": "*",
-		"adldap2/adldap2": "5.0.*"
+		"adldap2/adldap2": "5.*"
 	}
 }
