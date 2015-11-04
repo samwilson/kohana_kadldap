@@ -99,9 +99,12 @@ class Kadldap_Auth_LDAP extends Auth {
 	public function get_roles()
 	{
 		$username = $this->get_user();
-		$this->kadldap->authenticate($username, $this->password($username));
+		$this->kadldap->authenticate($username, $this->password($username), true);
 		$user = $this->kadldap->users()->find($username);
 		$groups = array();
+		if (!$user instanceof \Adldap\Models\User) {
+			return $groups;
+		}
 		foreach ($user->getGroups() as $group) {
 			$groups[$group->getCommonName()] = $group->getCommonName();
 		}

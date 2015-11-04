@@ -69,26 +69,6 @@ class Kadldap
 	}
 
 	/**
-	 * Validate a user's login credentials.  Wraps [adLDAP::authenticate] so we
-	 * can catch the connection or authentication error.
-	 *
-	 * @param string $username A user's AD username
-	 * @param string $password A user's AD password
-	 * @param bool optional $prevent_rebind
-	 * @return bool
-	 */
-//	public function authenticate($username, $password, $prevent_rebind = FALSE)
-//	{
-//		try
-//		{
-//			return $this->_adldap->authenticate($username, $password, $prevent_rebind);
-//		} catch (Exception $e)
-//		{
-//			throw new \Adldap\Exceptions\($this->_adldap->get_last_error());
-//		}
-//	}
-
-	/**
 	 * Wrapper for all functions in the adLDAP class that have not already been
 	 * wrapped in this class.
 	 *
@@ -107,17 +87,5 @@ class Kadldap
 			throw new Exception("Method $name does not exist in \Adldap\Adldap.");
 		}
 	}
-
-	/**
-	 * Override for adLDAP::user_info() method. Prevents the display of errors
-	 * if the user does not exist.
-	 *
-	 * @see adLDAP::user_info()
-	 */
-	/*public function user_info()
-	{
-		$args = func_get_args();
-		return call_user_func_array(array($this->_adldap, __FUNCTION__), $args);
-	}*/
 
 }

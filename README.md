@@ -32,6 +32,11 @@ or:
 
     Auth::instance()->logged_in('Security Group Name');
 
+It's also possible to get a list of a user's Security Groups (*roles*, in Kohana
+parlance) with:
+
+    Auth::instance()->get_roles();
+
 ## 4. Contribute
 
 Please report all issues at https://github.com/Adldap2/Adldap2-Kohana/issues

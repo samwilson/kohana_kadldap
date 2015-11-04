@@ -43,20 +43,19 @@
 	<?php echo html::anchor('kadldap/logout', '[Log out]') ?>
 </p>
 
-<h2>User Values</h2>
+<h2>User attributes and values</h2>
 <table>
 	<?php foreach ($userinfo as $label => $info) {
 		if (!is_array($info)) continue;
 	?>
 	<tr>
-		<th rowspan="<?php echo $info['count'] ?>"><?php echo $label ?></th>
+		<th rowspan="<?php echo count($info) ?>"><?php echo $label ?></th>
 		<td><?php 
-			if ($info['count']==1)
+			if (count($info)==1)
 			{
 				echo $info[0];
 			} else
 			{
-				unset($info['count']);
 				echo join ('</td></tr><tr><td>', $info);
 			}
 			?>

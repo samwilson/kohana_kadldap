@@ -65,16 +65,16 @@ class Controller_Kadldap extends Controller_Userguide
 		}
 
 		// Get information about the logged-in user
+		$view->userinfo = array();
 		if (Auth::instance()->logged_in())
 		{
 			$username = Auth::instance()->get_user();
 			$password = Auth::instance()->password($username);
-			$view->kadldap->authenticate($username, $password);
-			$view->userinfo = $view->kadldap->users()
-				->find($username)
-				->getAttributes();
-		} else {
-			$view->userinfo = NULL;
+			$view->kadldap->authenticate($username, $password, true);
+			$user = $view->kadldap->users()->find($username);
+			if ($user instanceof Adldap\Models\User) {
+				$view->userinfo = $user->getAttributes();
+			}
 		}
 	}
 
