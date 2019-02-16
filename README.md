@@ -1,6 +1,10 @@
 Active Directory and LDAP authentication for Kohana
 ===================================================
 
+## 🚨 Abandoned 🚨
+
+This package has been abandoned. Kohana itself has also been [abandoned](https://kohanaframework.org), so no further updates will be made on this package.
+
 A [Kohana 3.3](http://kohanaframework.org) module
 that wraps [Adldap2](https://github.com/Adldap2/Adldap2)
 to provide Active Directory and LDAP authentication.
